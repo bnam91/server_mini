@@ -437,6 +437,6 @@ def run_scheduler():
 
 if __name__ == "__main__":
     print("=" * 50)
-    print(f"⏱️  mini_01 스케줄러 시작")
+    print(f"⏱️  {ID} 스케줄러 시작")
     print("=" * 50)
     run_scheduler()
