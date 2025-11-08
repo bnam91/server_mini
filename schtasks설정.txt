@@ -1,0 +1,97 @@
+관리자 권한 CMD
+
+1. where python로 파이썬 경로 확인 필요
+2. scheduler.py 파일 경로 필요 > 
+3. 로그파일 저장경로 > C:\Users\[다른사용자이름]\Desktop\server_log.txt
+3-2.바탕화면 경로 > C:\Users\신현빈\Desktop
+
+확인후 gpt에게 만들어달라고 할것
+Q. schtasks로 부팅시 scheduler.py가 자동실행되도록 하려면 어떻게 할까? 파이선 경로와 scheduler경로 전달할게.
+
+
+✅ 실행 명령 (복사해서 CMD에 그대로 붙여넣기) /// 
+
+→ 이렇게 하면 실행 로그가 server_log.txt로 쌓여요.
+(C:\Users\신현빈\Desktop\ 폴더 안에 server_log.txt 파일로 저장)
+
+
+✅
+schtasks /create /tn "MiniScheduler" /tr "\"C:\Users\신현빈\AppData\Local\Programs\Python\Python310\python.exe\" \"C:\Users\신현빈\Desktop\github\server_mini\scheduler.py\" >> \"C:\Users\신현빈\Desktop\server_log.txt\" 2>&1" /sc onlogon /ru "신현빈"
+
+백그라운드 실행시엔 아래코드 사용 python.exe 가 아닌 pythonw.exe사용
+schtasks /create /tn "MiniScheduler" /tr "\"C:\Users\신현빈\AppData\Local\Programs\Python\Python310\pythonw.exe\" \"C:\Users\신현빈\Desktop\github\server_mini\scheduler.py\" >> \"C:\Users\신현빈\Desktop\server_log.txt\" 2>&1" /sc onlogon /ru "신현빈"
+
+
+==============
+
+
+schtasks /create /tn "MiniScheduler" 
+
+/tr 
+"\"C:\Users\신현빈\AppData\Local\Programs\Python\Python310\python.exe\" 
+\"C:\Users\신현빈\Desktop\github\server_mini\scheduler.py\" 
+>> \"C:\Users\신현빈\Desktop\server_log.txt\" 2>&1" /sc onlogon 
+
+/ru "신현빈"
+
+
+================
+
+✅설명
+| 항목                    | 설명                           |
+| --------------------- | ---------------------------- |
+| `/tn "MiniScheduler"` | 작업 이름 (아무 이름 가능)             |
+| `/tr "..."`           | 실행할 Python + 스크립트 + 로그 저장 경로 |
+| `/sc onlogon`         | 로그인할 때 자동 실행                 |
+| `/ru "신현빈"`           | “신현빈” 계정으로 실행 (권한 문제 해결)     |
+
+======추가설명=====
+
+| 부분        | 의미                          |
+| --------- | --------------------------- |
+| 첫 번째 큰따옴표 | Python 실행 파일 경로             |
+| 두 번째 큰따옴표 | 실행할 스크립트(`scheduler.py`) 경로 |
+| `>> ...`  | 로그를 `server_log.txt` 파일로 저장 |
+| `2>&1`    | 에러 로그도 함께 같은 파일에 저장         |
+
+즉 “Python으로 scheduler.py를 실행하고,
+실행 결과(출력·에러)를 바탕화면의 server_log.txt에 기록해라”
+라는 뜻이에요.
+
+================
+
+✅실행확인**
+등록 후 아래 명령으로 정상 등록됐는지 확인하세요:
+schtasks /query /tn "MiniScheduler"
+
+또는 전체 작업 목록 확인:   
+schtasks /query
+
+
+
+🧹 삭제하고 싶을 때
+schtasks /delete /tn "MiniScheduler" /f
+schtasks /delete /tn "MiniScheduler" /f
+
+
+🧹 수동 실행 테스트
+schtasks /run /tn "MiniScheduler"
+
+
+🧹 예약확인
+schtasks /query /tn "MiniScheduler"
+
+
+=============아래처럼 나올것임=======================
+폴더: \
+작업 이름                                다음 실행 시간         상태
+======================================== ====================== ===============
+MiniScheduler                            N/A                    준비
+
+
+| 항목                | 의미                                                      |
+| ----------------- | ------------------------------------------------------- |
+| **다음 실행 시간: N/A** | 이 작업은 **부팅 시 1회 실행형(onstart)** 이라 다음 예약이 없다는 뜻입니다 (정상). |
+| **상태: 실행 중**      | `scheduler.py`가 **현재 백그라운드에서 실행 중**이라는 뜻입니다.            |
+
+
