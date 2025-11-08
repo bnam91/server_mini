@@ -1,0 +1,18 @@
+# git clone 이후 생성할 파일 2가지
+
+- auth경로.txt
+- ID.txt
+
+=============================================
+
+1. auth.경로.txt
+- github > api_key > auth.py의 경로 선택
+
+2. ID.txt
+- 구글 시트명과 동일하게 입력
+- (예시) 매칭할 구글시트명 'mini_01'이라면 ID.txt에도 'mini_01'입력
+
+
+=============================================
+
+📍서버_자동화_시트 : https://docs.google.com/spreadsheets/d/1mkaF-DPisWkEaIZYjwdQJGfDykmXIERI3gu_H5pNrSQ/edit?gid=1933253521#gid=1933253521
