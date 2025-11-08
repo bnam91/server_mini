@@ -1,0 +1,44 @@
+📍gpts : https://chatgpt.com/g/g-690eabfd7bc88191a1a640241f1c4ea0-cmd-myeongryeongeo-jadong-byeonhwan-doumi-seobeo-jadonghwa-bos
+📍서버_자동화_시트 : https://docs.google.com/spreadsheets/d/1mkaF-DPisWkEaIZYjwdQJGfDykmXIERI3gu_H5pNrSQ/edit?gid=1933253521#gid=1933253521
+
+====================================
+사용법.txt
+====================================
+
+👉 0. 해당pc 'ID.txt'와 'auth경로.txt' 파일의 입력된 값을 수정하세요.
+
+👉 1. 아래의 내용(3가지, 파이썬 경로 등)을 gpts에 입력하세요. (cmd명령어 생성)
+- 
+
+👉 2. 시트에 입력할 명령어를 gpts로 변환해보세요.
+- 파일경로만 전달해봐도 됨
+
+
+👉 3. 명령어를 수동테스트 해보세요. (server_log.txt에 로그가 기록되어야함)
+- schtasks /run /tn "MiniScheduler"
+
+====================================
+
+- 1. where python 결과
+
+C:\Users\darli\AppData\Local\Programs\Python\Python310\python.exe
+C:\Users\darli\AppData\Local\Microsoft\WindowsApps\python.exe
+
+
+- 2. scheduler.py 파일 경로
+C:\Users\darli\Desktop\github\server_mini\scheduler.py
+
+
+- 3. 로그파일 저장경로 > C:\Users\[다른사용자이름]\Desktop\server_log.txt
+"C:\Users\darli\Desktop"
+
+- C:\Users\darli\Desktop\server_log.txt
+
+
+
+
+- 테스트 파일 경로
+파이썬
+C:\Users\darli\Desktop\github\server_mini\test01.py
+
+노드js

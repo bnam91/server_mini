@@ -1,3 +1,6 @@
+
+
+
 관리자 권한 CMD
 
 1. where python로 파이썬 경로 확인 필요
@@ -70,7 +73,6 @@ schtasks /query
 
 
 🧹 삭제하고 싶을 때
-schtasks /delete /tn "MiniScheduler" /f
 schtasks /delete /tn "MiniScheduler" /f
 
 

@@ -6,11 +6,39 @@ import subprocess
 from googleapiclient.discovery import build
 
 # 기본 설정
-ID = "mini_01"
 CHECK_INTERVAL = 300  # 30분 (초 단위) - 5분 단위로 체크하려면 300으로 변경
 
-# auth.py 경로 추가
-sys.path.insert(0, r"C:\Users\신현빈\Desktop\github\api_key")
+# ID 설정 (ID.txt에서 읽기)
+id_file_path = os.path.join(os.path.dirname(__file__), "ID.txt")
+try:
+    with open(id_file_path, "r", encoding="utf-8") as f:
+        ID = f.readline().strip()  # 첫 줄만 읽기
+    if not ID:
+        print(f"❌ 오류: ID.txt 파일이 비어있습니다.")
+        sys.exit(1)
+except FileNotFoundError:
+    print(f"❌ 오류: ID.txt 파일을 찾을 수 없습니다.")
+    sys.exit(1)
+except Exception as e:
+    print(f"❌ 오류: ID.txt 파일을 읽는 중 오류 발생: {e}")
+    sys.exit(1)
+
+# auth.py 경로 추가 (auth경로.txt에서 읽기)
+auth_path_file = os.path.join(os.path.dirname(__file__), "auth경로.txt")
+try:
+    with open(auth_path_file, "r", encoding="utf-8") as f:
+        auth_path = f.read().strip().strip('"').strip("'")
+    # 파일 경로인 경우 디렉토리 경로로 변환
+    if os.path.isfile(auth_path):
+        auth_path = os.path.dirname(auth_path)
+    sys.path.insert(0, auth_path)
+except FileNotFoundError:
+    print(f"❌ 오류: auth경로.txt 파일을 찾을 수 없습니다.")
+    sys.exit(1)
+except Exception as e:
+    print(f"❌ 오류: auth경로.txt 파일을 읽는 중 오류 발생: {e}")
+    sys.exit(1)
+
 from auth import get_credentials
 
 def extract_spreadsheet_info(url):
@@ -253,7 +281,9 @@ def countdown_sleep(seconds, next_check_time, scheduled_commands, earliest_next_
 
 def run_scheduler():
     """스케줄러 실행 루프"""
-    with open(r"C:\Users\신현빈\Desktop\server_log.txt", "a", encoding="utf-8") as f:
+    # server_log.txt를 스크립트와 같은 폴더에 저장
+    log_file_path = os.path.join(os.path.dirname(__file__), "server_log.txt")
+    with open(log_file_path, "a", encoding="utf-8") as f:
         f.write(f"[{datetime.datetime.now()}] 스케줄러 실행됨 ✅\n")
     
     # 구글 시트 URL
