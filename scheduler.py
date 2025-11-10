@@ -352,13 +352,14 @@ def run_scheduler():
                             try:
                                 # 명령어 실행 (백그라운드에서 실행하여 팝업 알림이 있어도 블로킹되지 않도록)
                                 # Windows에서는 CREATE_NEW_CONSOLE 플래그 사용
+                                # stdin은 None으로 설정하여 새 콘솔의 stdin을 사용 (Node.js readline 등이 작동하도록)
                                 if sys.platform == 'win32':
                                     process = subprocess.Popen(
                                         command,
                                         shell=True,
                                         stdout=subprocess.DEVNULL,
                                         stderr=subprocess.DEVNULL,
-                                        stdin=subprocess.DEVNULL,
+                                        stdin=None,  # None으로 설정하여 새 콘솔의 stdin 사용
                                         creationflags=subprocess.CREATE_NEW_CONSOLE
                                     )
                                 else:
@@ -368,7 +369,7 @@ def run_scheduler():
                                         shell=True,
                                         stdout=subprocess.DEVNULL,
                                         stderr=subprocess.DEVNULL,
-                                        stdin=subprocess.DEVNULL,
+                                        stdin=None,  # None으로 설정하여 새 콘솔의 stdin 사용
                                         start_new_session=True
                                     )
                                 
